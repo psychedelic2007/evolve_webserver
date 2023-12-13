@@ -1,0 +1,302 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    scroll-behaviour: smooth;
+    text-transform: capitalize;
+    transition: all 0.2s linear;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    --bg-color: #050505;
+    --second-bg-color: #112e42;
+    --text-color: #ededed;
+    --main-color: #39FF14;
+}
+
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+    scroll-behaviour: smooth;
+}
+
+body {
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+
+html::-webkit-scrollbar {
+  width: 0.8rem;
+}
+html::-webkit-scrollbar-track {
+  background: rgb(235, 202, 245);
+}
+html::-webkit-scrollbar-thumb {
+  background: #8ff7be;
+}
+
+/*navbar starts */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem 9%;
+    background: #010e24;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 2.5rem;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.navbar a {
+    font-size: 1.7rem;
+    color: var(--text-color);
+    font-weight: 500;
+    margin-left: 3.5rem;
+    transition: .3s;
+}
+
+.navbar a:hover,
+.navbar a.active {
+    color: var(--main-color);
+}
+
+#menu-icon{
+    font-size: 3.6rem;
+    color: var(--text-color);
+    cursor: pointer;
+    display: none;
+}
+
+section {
+    min-height: 100vh;
+    padding: 10rem 9% 2rem;
+}
+
+.basic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+    padding-bottom: 6rem;
+}
+
+.heading {
+    font-size: 10rem;
+    margin-top: 0;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.heading span {
+    /* Your span styles here */
+    color: #1eff00; /* Example color */
+}
+
+/* Style the content heading and container */
+.content-box {
+    background-color: #050505;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+  }
+  
+  .content-heading {
+    font-size: 50px;
+    color: white;
+    margin-left: -100rem;
+  }
+
+  .content-heading1 {
+    font-size: 50px;
+    color: white;
+    margin-left: -93rem;
+  }
+
+.preprocess {
+    display: block;
+    margin: 0 auto; /* Center horizontally */
+    max-width: 100%; /* Adjust the maximum width as needed */
+    height: 800px; /* Maintain the image's aspect ratio */
+    width: 1000px;
+}
+
+  .content-heading2 {
+    font-size: 50px;
+    color: white;
+    margin-left: -103rem;
+    margin-top: 5rem;
+  }
+  
+  .heading1 {
+    font-size: 10rem;
+    margin-top: 0;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.heading1 span {
+    /* Your span styles here */
+    color: #1eff00; /* Example color */
+}
+
+.sub-heading1 {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    margin-left: 5rem;
+}
+
+.f1 {
+    display: block;
+    margin: 0 auto; /* Center horizontally */
+    max-width: 100%; /* Adjust the maximum width as needed */
+    height: 800px; /* Maintain the image's aspect ratio */
+    width: 1000px;
+}
+
+  .content-heading3 {
+    font-size: 50px;
+    color: white;
+    margin-left: -35rem;
+  }
+
+  /* Style the content inside the container */
+  .content {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 0rem;
+  }
+  
+  .content p {
+    font-size: 2rem;
+    text-align: justify;
+    font-weight: 100;
+    padding: 10px;
+    position: relative;
+  }
+
+  .content-heading4 {
+    font-size: 50px;
+    color: white;
+    margin-left: -20rem;
+  }
+
+  .content-heading5 {
+    font-size: 50px;
+    color: white;
+    margin-left: -25rem;
+  }
+
+  .f2 {
+    display: block;
+    margin: 0 auto; /* Center horizontally */
+    max-width: 100%; /* Adjust the maximum width as needed */
+    height: 800px; /* Maintain the image's aspect ratio */
+    width: 1000px;
+}
+
+.f3 {
+    display: block;
+    margin-top: 5rem; /* Center horizontally */
+    margin-left: 20rem;
+    max-width: 100%; /* Adjust the maximum width as needed */
+    height: 900px; /* Maintain the image's aspect ratio */
+    width: 1000px;
+}
+
+.f3_1 {
+    display: block;
+    margin-top: 5rem; /* Center horizontally */
+    max-width: 100%; /* Adjust the maximum width as needed */
+    height: 1000px; /* Maintain the image's aspect ratio */
+    width: 1000px;
+}
+
+.content-heading6 {
+    font-size: 50px;
+    color: white;
+    margin-left: -68rem;
+}
+
+.content-heading7 {
+    font-size: 50px;
+    color: white;
+    margin-left: -68rem;
+}
+
+.f4 {
+    display: block;
+    margin-top: 5rem; /* Center horizontally */
+    max-width: 100%; /* Adjust the maximum width as needed */
+    height: 800px; /* Maintain the image's aspect ratio */
+    width: 1000px;
+}
+
+.model {
+    display: block;
+    margin-top: 5rem; /* Center horizontally */
+    max-width: 100%; /* Adjust the maximum width as needed */
+    height: 700px; /* Maintain the image's aspect ratio */
+    width: 1000px;
+}
+
+.content-heading8 {
+    font-size: 50px;
+    color: white;
+    margin-left: -105rem;
+}
+
+.content-heading9 {
+    font-size: 50px;
+    color: white;
+    margin-left: -50rem;
+}
+
+.content-heading10 {
+    font-size: 50px;
+    color: white;
+    margin-left: -107rem;
+}
+
+.content-heading11 {
+    font-size: 50px;
+    color: white;
+    margin-left: -125rem;
+}
+
+.content-heading12 {
+    font-size: 50px;
+    color: white;
+    margin-left: -95rem;
+}
+
+.video-container {
+    display: inline-block;
+    margin-right: 20px; /* Add spacing between videos if needed */
+}
+
+.content-heading13 {
+    font-size: 50px;
+    color: white;
+    margin-left: -95rem;
+}
