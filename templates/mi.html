@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@NaN,0,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="../static/preprocessing.css">
+    <title>Mutual Information | EVOLVE</title>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar Section -->
+        <aside>
+            <div class="toggle">
+                <div class="logo">
+                    <img src="../static/images/logo.png">
+                    <h2>EVO<span class="danger">LVE</span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">
+                        close
+                    </span>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <a href="{{ url_for('dashboard') }}">
+                    <span class="material-icons-sharp">dashboard</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="/preprocessing">
+                    <span class="material-symbols-outlined">schema</span>
+                    <h3>Preprocessing</h3>
+                </a>
+                <a href="/entropy">
+                    <span class="material-icons-sharp">bar_chart</span>
+                    <h3>Entropy Calculation</h3>
+                </a>
+                <a href="/mrf">
+                    <span class="material-symbols-outlined">schema</span>
+                    <h3>Mutational Response Function</h3>
+                </a>
+                <a href="/feature1">
+                    <span class="material-symbols-outlined">stat_1</span>
+                    <h3>Feature 1</h3>
+                </a>
+                <a href="/feature3">
+                    <span class="material-symbols-outlined">stat_3</span>
+                    <h3>Feature 3</h3>
+                </a>
+                <a href="/prediction">
+                    <span class="material-symbols-outlined">batch_prediction</span>
+                    <h3>Prediction</h3>
+                </a>
+                <a href="/mutual_information" class="active">
+                    <span class="material-symbols-outlined">page_info</span>
+                    <h3>Mutual Information Analysis</h3>
+                </a>
+                <a href="/logout">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Logout</h3>
+                </a>
+            </div>
+        </aside>
+        <!-- End of Sidebar Section -->
+
+        <!-- Main Content -->
+        <main>
+            <h1>Mutual Information</h1>
+            <div class="new-users">
+                <div class="user-list">
+                    <div class="user-info">
+                        <div class="user-details">
+                            <form method="POST" enctype="multipart/form-data" action="/mi_calculate" id="uploadForm">
+                                <label for="file">Upload your CSV file</label>
+                                <input type="file" id="file" name="file" accept=".csv">
+                                <br>
+                                <p>Adjust Threshold:</p>
+                                <input type="range" min="0" max="1" step="0.01" value="0.6" id="thresholdRange">
+                                <p id="thresholdValue">Threshold: 0.6</p>
+                                <input type="submit" value="Calculate MI">
+                            </form>
+
+                            {% if graph_data %}
+                            <h3>Predictions:</h3>   
+                            <img src="data:image/png;base64, {{ graph_data }}" alt="MI Graph" id="networkPlot">
+                            <a id="downloadLink" href="{{ url_for('download_processed_data') }}" download="processed_data.csv" style="display: none;">Download Processed Data</a>
+                            {% endif %}
+                            <p id="error" style="color:red; display:none;">Upload failed. Please try again</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- End of Main Content -->
+
+        <!-- Right Section -->
+        <div class="right-section">
+            <div class="nav">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">
+                        menu
+                    </span>
+                </button>
+                <div class="dark-mode">
+                    <span class="material-icons-sharp">light_mode</span>
+                    <span class="material-icons-sharp active">dark_mode</span>
+                </div>
+
+                <div class="profile">
+                    <div class="info">
+                        <p id="user-greeting">Hey, <b id="user-name-placeholder">{{ user.username }}</b></p>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="images/profile-1.jpg">
+                    </div>
+                </div>
+            </div>
+            <!-- End of Nav -->
+        </div>
+    </div>
+    <script src="../static/js/mi.js"></script>
+    <script src="../static/js/dashboard.js"></script>
+
+</body>
+</html>

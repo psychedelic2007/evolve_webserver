@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title> Theory Corner | EVOLVE</title>
+  <link rel="stylesheet" href="../static/theory_corner.css">
+  <link rel="stylesheet" href="../static/style.css">
+
+  <!-- Fontawesome CDN Link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body oncontextmenu="return false">
+  <!-- Header Design -->
+  <header class="header">
+    <a href="{{ url_for('index')}}" class="logo">
+        <img src="../static/images/logo.png" alt="EVOLVE Logo">
+        <span class="logo-title">EVOLVE.</span>
+    </a>
+    <div class="bx bx-menu" id="menu-icon"></div>
+    <nav class="navbar">
+      <a href="{{ url_for('index')}}">Home</a>
+      <a href="{{ url_for('about')}}">About</a>
+      <a href="{{ url_for('theory_corner')}}" class="active">Theory Corner</a>
+      <a href="{{ url_for('tutorial')}}">Tutorial</a>
+      <a href="{{ url_for('contact_us')}}">Contact Us</a>
+      <a href="{{ url_for('login')}}">Login</a>
+    </nav>
+  </header>
+
+  <section class="basic" id="basic">
+    <h1 class="heading">Theory <span>Corner</span></h1>
+    <div class="content-box">
+        <h1 class="content-heading">Data Acquisition</h1>
+        <div class="content">
+            <p>Our data acquisition process focuses primarily on the National Center for Biotechnology Information's Virus Database <a href="https://www.ncbi.nlm.nih.gov/labs/virus/vssi/#/" target="_blank">(NCBI Virus)</a>,
+                which is a widely acknowledged and reputable repository for viral sequence data.
+                Before initiating the download, we recommend considering the customization of your dataset to align it with your specific research objectives. 
+                You can apply refinement parameters such as specifying a range for sequence length, ensuring nucleotide completeness, identifying the pango lineage, 
+                and establishing a timeline for collection dates. These refinements are instrumental in obtaining more precise and tailored results.
+                Following the refinement stage, the datasets are made available for download in the FASTA format. FASTA is a universally accepted format that 
+                streamlines subsequent computational analyses. This format ensures compatibility with a diverse array of computational tools and analytical 
+                platforms, facilitating seamless data integration into your research endeavors.
+                </p>
+        </div>
+    </div>
+
+    <div class="content-box">
+        <h1 class="content-heading1">Data Preprocessing</h1>
+        <div class="content">
+            <p>The curation process entails a methodical elimination of sequences that include gaps, unidentified 'X' residues, duplicates, and those exhibiting 
+                incomplete amino acid compositions. This curation is facilitated by the implementation of a Python script.
+                The meticulously refined datasets are subjected to alignment procedures utilizing a Multiple Sequence Alignment (MSA) tool, 
+                as exemplified by <a href="https://mafft.cbrc.jp/alignment/server/index.html" target="_blank">MAFFT</a>. MAFFT offers a comprehensive suite of 
+                multiple alignment methodologies, addressing the complexities of sequence alignment in a thorough and systematic fashion.
+            </p>
+        </div>
+    </div>
+    <img class="preprocess" src="../static/images/preprocessing_draft.jpg" alt="Image Description">
+
+    <div class="content-box">
+        <h1 class="content-heading2">Model Overview</h1>
+        <div class="content">
+            <p>In our earlier work, We employed a feedforward backpropagation neural network, characterized by a model architecture denoted as 4-8-8-1. 
+                The initial layer of this model corresponds to the incorporation of four distinct input features, succeeded by two intermediary hidden layers, 
+                each comprised of eight neurons. The final layer of this architecture is constituted by a solitary neuron, which inherently signifies the output, 
+                serving as the target. In configuring this neural network, we selected specific activation functions. The first three layers were underpinned by 
+                the hyperbolic-tangent activation function, while the output layer employed the sigmoid activation function. This choice in activation functions 
+                ensures that the network yields output values within the range of zero to one, effectively representing the probability of a mutation occurrence.
+
+                But, after performing feature analysis, we have dropped Feature 2 ("Dirtibution Probability") from the feature list as it doesn't contribute much 
+                towards model training.
+            </p>
+        </div>
+    </div>
+    <p>===============================================================================================================================================================================================================================================================</p>
+    <p>===============================================================================================================================================================================================================================================================</p>
+    <p>===============================================================================================================================================================================================================================================================</p>
+
+    <h1 class="heading1">Feature <span>Selection</span></h1>
+    <h2 class="sub-heading1">
+        Feature selection plays a pivotal role in the comprehensive analysis of amino acid mutational occurrences within protein sequences. 
+        In this study, we delve into four key features: Pair Predictability, Distribution Probability of Amino Acids, Future Composition of Amino Acids, 
+        and Amino Acid Entropy. 
+    </h2>
+    <div class="content-box">
+        <h1 class="content-heading3">Feature 1: Pair Predictibility of Amino Acids</h1>
+        <div class="content">
+            <p>The consideration of pair predictability holds paramount importance when analyzing the incidence of mutations. A single-point mutation 
+                affecting an amino acid at a specific position can lead to an alteration in the amino acid pair, consequently resulting in a distinct pair 
+                frequency.
+            </p>
+        </div>
+    </div>
+    <img class="f1" src="../static/images/ft1.jpg" alt="Image Description">
+    
+    <div class="content-box">
+        <div class="content">
+            <p>
+                From a 1D protein sequence with <strong>'Z'</strong> number of amino acids the pair prediction of pair <strong>'ND'</strong>is shown. Let's say that the 
+                length of protein sequence is 1271 and the protein sequence consists of 88 Asparagine (N) and 62 Aspartic Acid (D). The count of <strong>"ND"</strong>pair 
+                occurring together is: 
+                <p><span style="text-transform: none;">Frequency of 'ND' pair</span> = \(\frac{88}{1271} \times \frac{62}{1270} \times 1270 = 4.29\)</p>
+                <p>That is there will be occurrence of 4 “ND” pairs in the sequence which corresponds to the predicted frequency. The actual frequency of the “ND” pair is also 4.
+                Thus, the difference between its actual and predicted frequencies becomes zero.</p>
+            </p> 
+            <p>
+                Variable pairs that can occur are calculated as <strong>'Predicted count'</strong> using the expression:
+                <p><span style="text-transform: none;">Predicted Count of 'ND' pair</span> = \(\frac{\text{No. of N in sequence}}{Z} \times \frac{\text{No. of D in sequence}}{Z} \times (Z - 1)\)</p>
+                <p>where, Z is the total number of amino acids in the sequence. The count (equation num) is a product of the probability of the occurrence of 1st 
+                amino acid, the probability of the occurrence of 2nd amino acid of the pair, and one less than the count of the total number of amino acids. The 
+                probability has denominator as ‘Z’ and ‘Z-1’ respectively because the first amino acid of the given pair (here, ‘N’) is picked among Z number of 
+                amino acids and then the second amino acid of the pair (here, ‘D’) is chosen from one amino acid less that is (Z-1) number of amino acids.</p> 
+                <p>It is important to note that amino acid pairs are non-commutative in nature. Consequently, calculations of both orientations ('ND' and 'DA') are 
+                considered when determining the 'Predicted count', except for the terminal amino acids. The Predicted count is rounded off to the nearest integer 
+                value.</p> 
+                <p>The <strong>'Actual count'</strong> of a pair is determined through a window that traverses the entire sequence, tallying the occurrences of the specific 
+                pair throughout the sequence. This comprehensive approach ensures that both orientations ('ND' and 'DA') are included in the calculations for the 
+                'Actual count.'</p>
+                <p>The difference between <strong>‘Predicted count’</strong> and <strong>‘Actual count’</strong> is a crucial metric, which is denoted by \(\Delta\). 
+                    If the 'Predicted count' and 'Actual count' are the same then the difference, \(\Delta\), becomes zero, signifying that mutation of the given 
+                    pair may not be significant.</p>
+                <p>Then, Mutational Weightage = \(\Delta_{ND} -\Delta_{DN}\) is evaluated using the above information.</p>
+                <p>The Mutational Weightage is evaluated for all possible pairs and their sum is assigned to the respective amino acid as feature 1.</p>
+            </p>
+        </div>
+    </div>
+
+    <div class="content-box">
+        <h1 class="content-heading4">Feature 2: Distribution Probability of Amino Acids</h1>
+        <div class="content">
+            <p>Amino acids within proteins exhibit a non-uniform distribution, characterized by clustering in specific regions rather than a homogeneous spread 
+                along the sequence. Any alteration in the position of an amino acid leads to a consequential change in the natural distribution pattern within 
+                the protein sequence. This feature is based upon the occupancy of sub-populations and partitions. The position of each type of amino acid in a 
+                protein sequence can be viewed as a particular distribution whose probability can be calculated as :
+                <p><span style="text-transform: none;">Distribution Probability</span> = \(\frac{r!}{(q_{0}! \times q_{1}! \times q_{2}!.....\times q_{n}!)} \times \frac{r!}{(r_{1}! \times r_{2}! \times r_{3}!.....\times r_{n}!)} \times n^{-r}\)</p>
+                <p>Where, “R” is the number of a particular amino acid, “N” is the number of partitions, “\(R_N\)” is the number of amino acids in the \(N^{th}\) 
+                    partition and “\(Q_N\)” is the number of partitions with the same number of amino acids.</p>
+            </p>
+        </div>
+    </div>
+    <img class="f2" src="../static/images/ft2.jpg" alt="Image Description">
+
+    <div class="content-box">
+        <div class="content">
+            <p>
+                Consider a protein sequence containing 100 amino acids with a non-uniform distribution pattern, as shown in the figure. For instance, 
+                let's examine the distribution probability of Alanine (A), which appears 10 times in the sequence. To determine this probability, we first 
+                calculate the number of partitions ("n"), which is obtained as the sequence length divided by the number of a specific amino acid (in this case, 
+                n = 100/10 = 10 i.e 10 partitions each having 10 amino acids). For each partition (from n= 1 to 10), we meticulously assess the values of "\(R_N\)" and "\(Q_N\)". 
+                Utilizing this data, we proceed to compute the actual probability distribution using the above formula. A similar procedure 
+                is employed to calculate the predicted distribution, accounting for all possible point mutations.
+            </p>
+            <p>
+                This distribution probability can be alluded to in statistical mechanics, which arranges the rudimentary particles within different energy states. 
+                The actual distribution of an amino acid in a protein sequence is calculated by partitioning the sequence into n partitions where 
+                n= Sequence length/number of particular amino acid. For each partition the value of “rn” and “qn” are evaluated and the distribution probability 
+                of the particular amino acid is calculated (using the equation num).</p>
+            <p>
+                The predicted distribution is determined for each amino acid. The given protein sequence is partitioned into ‘n’ number of partitions. For each partition 
+                all the probable point mutations are considered. The probability distribution for each of the mutations is evaluated (using the equation num) and the mutation 
+                having the highest probability distribution value is considered. The feature is extracted by taking the ratio of predicted to actual distribution and then 
+                taking the natural log of the value obtained. However, this ratio often results in a significantly high magnitude. To mitigate this, we apply a natural 
+                logarithm transformation, reducing the value to a range compatible with other features. The resulting transformed value is then designated as the second 
+                feature for further analysis.
+            </p>
+        </div>
+    </div>
+
+    <div class="content-box">
+        <h1 class="content-heading5">Feature 3: Future Composition of Amino Acids</h1>
+        <div class="content">
+            <p>
+                The third feature focuses on examination of amino acid composition within a protein sequence and how it undergoes changes due to genetic mutations. 
+                This analysis is geared towards estimating the likelihood of a specific amino acid mutating into another amino acid, a calculation facilitated by 
+                insights from the RNA codon table and mutational probabilities. Mutational probabilities are derived directly from the RNA Codon table, which serves 
+                as a fundamental reference for mapping codons to their corresponding amino acids. These probabilities are represented visually as a color-coded 
+                Circos plot as shown below:
+            </p>
+        </div>
+        <img class="f3" src="../static/images/circos.png" alt="Image Description">
+    </div>
+
+    <div class="content-box">
+        <div class="content">
+            <p>
+                The rationale behind this feature lies in understanding that each amino acid is encoded by a unique codon. Mutations in the nucleotide bases can 
+                alter these codons, ultimately resulting in different amino acids being incorporated into the protein sequence.
+            </p>
+        </div>
+    </div>
+
+    <img class="f3_1" src="../static/images/ft3.jpg" alt="Image Description">
+    
+    <div class="content-box">
+        <div class="content">
+            <p>
+                For example, consider the amino acid Methionine (M), which is encoded by the codon "AUG." Mutations at any of the codon's positions can lead to 
+                the formation of different codons, each corresponding to distinct amino acids. An illustrative scenario is when a mutation in the first position 
+                of "AUG" transforms it into "CUG," "GUG," or "UUG," resulting in Leucine, Valine, or Leucine, respectively. This concept applies similarly to 
+                mutations at the other two positions within the codon. Consequently, we can establish a final mutational probability relationship for Methionine 
+                as follows:
+                <p><span style="text-transform: none;">Mutational Probability of Methionine (M)</span> = \(\frac{1R}{9} + \frac{3I}{9} + \frac{2L}{p} + \frac{1K}{9} + \frac{1T}{9} + \frac{1V}{9}\)</p>
+                <p>To predict the future composition of Methionine within a sequence, the respective amino acid counts are plugged into the above equation. After 
+                    determining the future compositions of all 20 amino acids, the feature moves on to calculate their anticipated contributions to the protein 
+                    sequence.
+                </p>
+                <p>Actual contributions are also computed for each amino acid, representing the count of that particular amino acid divided by the total number 
+                    of amino acids in the sequence. The ratio of predicted to actual contributions is finally assigned as feature3 for each amino acid along the 
+                    sequence. This ratio offers valuable insights into how mutations can affect the composition of amino acids within a protein sequence.</p>
+            </p>
+        </div>
+    </div>
+
+    <div class="content-box">
+        <h1 class="content-heading6">Feature 4: Amino Acid Entropy</h1>
+        <div class="content">
+            <p>
+                The fourth feature in the analysis focuses on the entropy of amino acid residues, providing valuable insights into the mutational patterns within 
+                protein sequences, as described in the paper by <a href="https://pubs.acs.org/doi/10.1021/acs.jpcb.2c04574" target="_blank">Sangeet et al. (2022)</a>
+            </p>
+            <p>
+                The essence of this feature lies in capturing the effect of mutations in terms of the entropy of individual amino acid residues. It is founded on 
+                the concept of residue conservation throughout evolutionary processes. In essence, if a protein sequence remains unchanged through several generations 
+                without mutations, the amino acid at a specific position will remain conserved, resulting in an entropy value of zero. However, the introduction of 
+                mutations alters the amino acid pattern, leading to an increase in entropy.
+            </p>
+            <p>
+                Our methodology involves aligning the final sequences using <a href="https://www.genome.jp/tools-bin/clustalw" target="_blank">CLUSTALW</a> and 
+                subsequently calculating the entropy of each position within the sequence using the formula: 
+                <p><span style="text-transform: none;">Shannon Entropy</span> = -\(\sum(p_{x}.log(p_{x}))\)</p>
+            </p>
+            <p>
+                where, 'Pi' represents the probability of occurrence of a particular amino acid at position "i". The values obtained through this entropy calculation 
+                serve as the fourth feature in our model. This feature provides crucial information about the level of conservation or mutational dynamics at specific 
+                positions within the protein sequence. Higher entropy values indicate greater variability and mutational potential, while lower values signify 
+                conservation. By incorporating amino acid entropy into our feature set, we gain a deeper understanding of how mutations impact the protein 
+                sequence's structural and functional aspects. This feature aids in unraveling the complex interplay between sequence evolution and protein function, 
+                contributing to a more comprehensive analysis of mutational patterns within biological systems.
+            </p>
+        </div>
+    </div>
+    <img class="f4" src="../static/images/ft4.jpg" alt="Image Description">
+    <p>===============================================================================================================================================================================================================================================================</p>
+    <p>===============================================================================================================================================================================================================================================================</p>
+    <p>===============================================================================================================================================================================================================================================================</p>
+
+    <h1 class="heading">Hyperparameter<span> Tuning</span></h1>
+    <div class="content-box">
+        <div class="content">
+            <p>
+                Feature assignment of the protein sequence is followed by hyperparameter optimization in order to find the optimal model architecture.
+            </p>
+        </div>
+    </div>
+    <img class="model" src="../static/images/model.jpg" alt="Image Description">
+
+    <div class="content-box">
+        <h1 class="content-heading8">Hidden Layers</h1>
+        <div class="content">
+            <p>
+                The Architectural Blueprint: Hidden layers are the essence of neural networks, shaping their structural complexity. The number of hidden layers in 
+                your network influences its capacity to capture intricate patterns and relationships within the data. We varied the number of hidden layers from to 
+                layers to 64 layers.
+            </p>
+        </div>
+    </div>
+
+    <div class="content-box">
+        <h1 class="content-heading9">Number of Neurons in Hidden layers</h1>
+        <div class="content">
+            <p>
+                Fine-Tuning Model Capacity: The neurons within hidden layers define the capacity to model and approximate complex functions. Balancing this count 
+                ensures optimal representation and prevents overfitting. We varied the number of neurons in each hidden layer from 4 to 128.
+            </p>
+        </div>
+    </div>
+
+    <div class="content-box">
+        <h1 class="content-heading10">Learning Rate</h1>
+        <div class="content">
+            <p>
+                The Step Size of Learning: Learning rate determines the size of steps taken during training. Finding the right learning rate is crucial; too large, 
+                and the model may overshoot, too small, and learning may stagnate. We varied the learning rate from 0.0001 to 1.
+            </p>
+        </div>
+    </div>
+
+    <div class="content-box">
+        <h1 class="content-heading11">Epochs</h1>
+        <div class="content">
+            <p>
+                The Repetition Principle: Epochs are the number of times the entire dataset is presented to the model during training. Choosing the right number of 
+                epochs balances model convergence and prevents overfitting. We varied the number of epochs from 100 to 500.
+            </p>
+        </div>
+    </div>
+
+    <div class="content-box">
+        <h1 class="content-heading12">Activation Function</h1>
+        <div class="content">
+            <p>
+                Unlocking Non-linearity: Activation functions introduce non-linearity into the model, enabling it to learn intricate patterns and relationships 
+                within the data. Choices like ReLU, Sigmoid, or Tanh influence the network's adaptability. We finally selected TanH activation function for our model's
+                first three layers and Sigmoid activation function for the output layer.
+            </p>
+            <div class="video-container">
+                <iframe width="420" height="400" src="../static/images/relu_act_animation.mp4" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="video-container">
+                <iframe width="420" height="400" src="../static/images/tanh_sig__act_animation.mp4" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-box">
+        <h1 class="content-heading13">Model Training</h1>
+        <div class="content">
+            <p>
+                To optimize the model's performance, we attempted to explore various configurations by manipulating the number of hidden layers and neurons. 
+                Throughout this process, we closely tracked critical metrics, including training accuracy and loss. Surprisingly, our findings revealed that there 
+                was no significant discrepancy in training loss or accuracy when comparing models with 2, 3, and 4 hidden layers. Furthermore, increasing the number 
+                of neurons within these layers did not lead to substantial performance enhancements. 
+            </p>
+            <p>
+                After meticulous experimentation and thorough evaluation, we arrived at a final model architecture: a feedforward backpropagation neural network 
+                with 4 input features, two hidden layers, each containing eight neurons, and a single output layer for classification (4-8-8-1). Activation functions 
+                were thoughtfully selected as hyperbolic tangent for the first three layers and sigmoid for the output layer, ensuring output values between zero and 
+                one, representing the probability of mutation.
+            </p>
+        </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-content">
+        <div class="footer-left">
+            <span class="footer-logo">EVOLVE</span>
+            <br>
+            <span class="footer-copyright">&copy; 2023 EVOLVE</span>
+            <br>
+            <span class="footer-copyright1"><a href="https://www.drsusmitaroy.com/" target="_blank">Dr. Susmita Roy's Group</a>. All rights reserved</span>
+        </div>
+
+        <div class="footer-links">
+            <a href="#faq" onclick="openPopup('FAQ')">FAQ |</a>
+            <a href="{{ url_for('contact_us')}}">Contact |</a>
+            <a href="#policy" onclick="openPopup('Policy')">Policy |</a>
+            <a href="#terms" onclick="'openPopup('Terms & Conditions')">Terms and Conditions |</a>
+        </div>
+    </div>
+</footer>
+
+<div id="popup-overlay-faq"></div>
+<div id="popup-container-faq">
+    <div id="popup-header-faq">
+        <span id="popup-close-faq" onclick="closePopup('faq')" style="font-size: 20px;">&times;</span>
+    </div>
+    <div id="popup-content-faq">
+        <h3>FAQs</h3>
+        <br>
+        <h4>Is ARIAS Free?</h4>
+        <p>ChatPDF allows you to use it for free with 4 PDFs every day, each up to 150 pages. For more,
+            you can upgrade to the Pro plan for $5 per month. For additional information, check the pricing page.</p>
+        <br>
+        <h4>What about the privacy of my files?</h4>
+        <p>ARIAS never shares your file with anyone. They are stored on a secure cloud storage and can be deleted anytime.</p>
+    </div>
+</div>
+
+  <!-- Update Step 1 with a click event listener -->
+  <script src="../static/js/theory_corner.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.5/typed.min.js" integrity="sha512-1KbKusm/hAtkX5FScVR5G36wodIMnVd/aP04af06iyQTkD17szAMGNmxfNH+tEuFp3Og/P5G32L1qEC47CZbUQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="../static/js/script.js"></script>
+  <script type="text/javascript" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+</body>
+</html>
