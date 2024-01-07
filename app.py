@@ -683,6 +683,13 @@ def download_prediction_plot():
     else:
         return "The prediction plot is not available."
 
+@app.route('/tutorial_dashboard', methods=['GET', 'POST'])
+def tutorial_dashboard():
+    if session.get('logged_in'):
+        user = User.query.filter_by(username=session['username']).first()
+        return render_template('tutorial_dashboard.html', user=user)
+    return render_template('index.html', message="Please Login first")
+    
 if(__name__ == '__main__'):
     with app.app_context():
         db.create_all()
